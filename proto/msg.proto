@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package j2b;
+
+enum StatusCode {
+    UNKNOWN_FAIL     = 0;
+    SUCCESS          = 1;
+    ALLOC_FAIL       = 2;
+    KEY_INFO_MISSING = 3;
+    SYSTEM_CALL_FAIL = 16;
+    NOT_EXCEPTED     = 17;
+    UNDER_FLOW       = 18;
+    OVER_FLOW        = 19;
+    STATUS_MAX       = 255;
+};
+
+message Request {
+    Method  method    = 1;
+    int32   max_retry = 2;
+    string  community = 3;
+    string  version   = 4;
+    string  ip        = 5;
+    string  oid       = 6;
+    SetType type      = 7;
+    string  value     = 8;
+    int32   timeout   = 9;
+    int64 timestamp   = 10;
+
+    enum Method {
+        UNKNOWN_METHOD = 0;
+        SNMPGET        = 1;
+        SNMPWALK       = 2;
+        SNMPSET        = 3;
+        METHOD_MAX     = 4;
+    };
+
+    enum SetType {
+        UNKNOWN_SET_TYPE = 0;
+        INT              = 1;
+        UNSIGNED_INT     = 2;
+        TIMETICKS        = 3;
+        IPADDRESS        = 4;
+        OBJID            = 5;
+        STRING           = 6;
+        HEX_STRING       = 7;
+        DECIMAL_STRING   = 8;
+        BITS             = 9;
+        UNSIGNED_INT64   = 10;
+        SIGNED_INT64     = 11;
+        FLOAT            = 12;
+        DOUBLE           = 13;
+        SET_TYPE_MAX     = 14;
+    };
+}
+
+message Request_List { repeated Request list = 1; }

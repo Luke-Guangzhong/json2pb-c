@@ -1,5 +1,4 @@
 ---
-BasedOnStyle: LLVM
 IndentWidth: 4
 AlignConsecutiveAssignments:
   Enabled: true
@@ -26,6 +25,7 @@ AlignArrayOfStructures: Left
 ColumnLimit: 120
 ---
 Language: Cpp
+BasedOnStyle: LLVM
 DerivePointerAlignment: false
 PointerAlignment: Left
 BreakBeforeBraces: Linux
@@ -33,11 +33,14 @@ SeparateDefinitionBlocks: Always
 AllowShortEnumsOnASingleLine: false
 AlwaysBreakAfterReturnType: TopLevelDefinitions
 BinPackParameters: false
---- 
+---
 Language: JavaScript
+BasedOnStyle: LLVM
 ColumnLimit: 100
 ---
 Language: Proto
+BasedOnStyle: Google
 ---
 Language: CSharp
+BasedOnStyle: LLVM
 ColumnLimit: 100
