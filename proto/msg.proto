@@ -24,7 +24,7 @@ message Request {
     SetType type      = 7;
     string  value     = 8;
     int32   timeout   = 9;
-    int64 timestamp   = 10;
+    int64   timestamp = 10;
 
     enum Method {
         UNKNOWN_METHOD = 0;
@@ -53,4 +53,6 @@ message Request {
     };
 }
 
-message Request_List { repeated Request list = 1; }
+message Request_List {
+    repeated Request list = 1;
+}
