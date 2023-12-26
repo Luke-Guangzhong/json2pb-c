@@ -1,26 +1,27 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"clang-format.styele": "google",
-		"editor.formatOnSaveMode": "file",
-		"C_Cpp.clang_format_fallbackStyle": "LLVM",
-		"C_Cpp.clang_format_path": "/usr/bin/clang-format",
-		"C_Cpp.formatting": "clangFormat",
-		"editor.formatOnPaste": true,
-		"editor.formatOnSave": true,
-		"editor.formatOnType": true
-	},
-	"extensions": {
-		"recommendations": [
-			"ms-vscode.cpptools-extension-pack",
-			"ms-azuretools.vscode-docker",
-			"cschlosser.doxdocgen",
-			"mhutchie.git-graph",
-			"zxh404.vscode-proto3"
-		]
-	}
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "clang-format.styele": "google",
+        "editor.formatOnSaveMode": "file",
+        "C_Cpp.clang_format_fallbackStyle": "LLVM",
+        "C_Cpp.clang_format_path": "/usr/bin/clang-format",
+        "C_Cpp.formatting": "clangFormat",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "clang-format.style": "{ BasedOnStyle: google, IndentWidth: 4, AlignConsecutiveAssignments: true, AlignConsecutiveDeclarations: true, AlignTrailingComments: true, ColumnLimit: 0 }"
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-vscode.cpptools-extension-pack",
+            "ms-azuretools.vscode-docker",
+            "cschlosser.doxdocgen",
+            "mhutchie.git-graph",
+            "zxh404.vscode-proto3"
+        ]
+    }
 }

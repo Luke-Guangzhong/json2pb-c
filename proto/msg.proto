@@ -2,55 +2,55 @@ syntax = "proto3";
 
 package j2b;
 
-enum StatusCode {
-    UNKNOWN_FAIL     = 0;
-    SUCCESS          = 1;
-    ALLOC_FAIL       = 2;
-    KEY_INFO_MISSING = 3;
-    SYSTEM_CALL_FAIL = 16;
-    NOT_EXCEPTED     = 17;
-    UNDER_FLOW       = 18;
-    OVER_FLOW        = 19;
-    STATUS_MAX       = 255;
+enum Status {
+    WAITING    = 0;
+    STANDBY    = 1;
+    EXECUTE    = 2;
+    READDITION = 3;
 };
 
+enum BasicDirection {
+    North     = 0;
+    NorthEast = 1;
+    East      = 2;
+}
+
 message Request {
-    Method  method    = 1;
-    int32   max_retry = 2;
-    string  community = 3;
-    string  version   = 4;
-    string  ip        = 5;
-    string  oid       = 6;
-    SetType type      = 7;
-    string  value     = 8;
-    int32   timeout   = 9;
-    int64 timestamp   = 10;
+    reserved 3, 8, 9;
+    reserved "retry", "length", "hight";
+
+    Method     method     = 1;
+    int32      rssi       = 2;
+    string     ip         = 4;
+    uint32     timestamp  = 5;
+    uint64     tx_bytes   = 6;
+    uint64     rx_bytes   = 7;
+    bool       laser      = 10;
+    string     appendix   = 11;
+    Coordinate coordinate = 12;
+    Status     status     = 13;
+    Weather    weather    = 14;
 
     enum Method {
-        UNKNOWN_METHOD = 0;
-        SNMPGET        = 1;
-        SNMPWALK       = 2;
-        SNMPSET        = 3;
-        METHOD_MAX     = 4;
-    };
-
-    enum SetType {
-        UNKNOWN_SET_TYPE = 0;
-        INT              = 1;
-        UNSIGNED_INT     = 2;
-        TIMETICKS        = 3;
-        IPADDRESS        = 4;
-        OBJID            = 5;
-        STRING           = 6;
-        HEX_STRING       = 7;
-        DECIMAL_STRING   = 8;
-        BITS             = 9;
-        UNSIGNED_INT64   = 10;
-        SIGNED_INT64     = 11;
-        FLOAT            = 12;
-        DOUBLE           = 13;
-        SET_TYPE_MAX     = 14;
+        ARTILLERY = 0;
+        CAS       = 1;
+        MISSILE   = 2;
     };
 }
 
-message Request_List { repeated Request list = 1; }
+message Weather {
+}
+
+message Coordinate {
+    Type   type      = 1;
+    double longitude = 2;
+    double latitude  = 3;
+    double angle     = 4;
+    double distance  = 5;
+
+    enum Type {
+        CARTESIAN = 0;
+        POLAR     = 1;
+        BOTH      = 2;
+    }
+}
