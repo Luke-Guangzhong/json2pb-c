@@ -1,0 +1,4 @@
+{
+    "clang-format.style": "{ BasedOnStyle: google, IndentWidth: 4, AlignConsecutiveAssignments: true, AlignConsecutiveDeclarations: true }",
+    "protoc": {}
+}

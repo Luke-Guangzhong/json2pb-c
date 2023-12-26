@@ -38,8 +38,7 @@ message Request {
     };
 }
 
-message Weather {
-}
+message Weather {}
 
 message Coordinate {
     Type   type      = 1;
