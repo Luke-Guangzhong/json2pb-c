@@ -25,7 +25,6 @@ AlignArrayOfStructures: Left
 ColumnLimit: 120
 ---
 Language: Cpp
-BasedOnStyle: LLVM
 DerivePointerAlignment: false
 PointerAlignment: Left
 BreakBeforeBraces: Linux
