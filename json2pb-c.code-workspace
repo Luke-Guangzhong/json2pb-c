@@ -16,7 +16,8 @@
         "clang-format.style": "{ BasedOnStyle: google, IndentWidth: 4, AlignConsecutiveAssignments: true, AlignConsecutiveDeclarations: true, AlignTrailingComments: true, ColumnLimit: 0 }",
         "files.associations": {
             ".clang-format": "yaml",
-            "protobuf-c.h": "c"
+            "protobuf-c.h": "c",
+            "stddef.h": "c"
         }
     },
     "extensions": {
