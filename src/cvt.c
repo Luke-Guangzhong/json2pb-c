@@ -30,7 +30,7 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
         case PROTOBUF_C_TYPE_INT32:
         case PROTOBUF_C_TYPE_SINT32:
         case PROTOBUF_C_TYPE_SFIXED32:
-            DEBUG("set %s to (int32)%s\n", cJSON_Print(item), field_desc->name);
+            DEBUG("set %s to %s.(int32)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
             if (cJSON_IsNumber(item)) {
                 *(int32_t*)((void*)msg + field_desc->offset) = (int32_t)item->valuedouble;
             } else {
@@ -39,7 +39,7 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             break;
 
         case PROTOBUF_C_TYPE_BOOL:
-            DEBUG("set %d to (bool)%s\n", cJSON_Print(item), field_desc->name);
+            DEBUG("set %d to %s.(bool)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
             if (cJSON_IsBool(item)) {
                 cJSON_IsTrue(item) ? ((*(bool*)((void*)msg + field_desc->offset)) = true)
                                    : ((*(bool*)((void*)msg + field_desc->offset)) = false);
@@ -49,7 +49,22 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             break;
 
         case PROTOBUF_C_TYPE_ENUM:
+            DEBUG("set %s to %s(enum)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
+            if (cJSON_IsString(item)) {
+                if (NULL != cJSON_GetStringValue(item) && strlen(cJSON_GetStringValue(item)) > 0) {
+                    *(int*)((void*)msg + field_desc->offset) =
+                        protobuf_c_enum_descriptor_get_value_by_name(field_desc->descriptor, cJSON_GetStringValue(item))
+                            ->value;
+                } else {
+                    ERROR("JSON field %s is empty string\n", field_desc->name);
+                }
+            } else if (cJSON_IsNumber(item)) {
+                *(int*)((void*)msg + field_desc->offset) = (int)item->valuedouble;
+            } else {
+                ERROR("JSON field %s is not valid\n", field_desc->name);
+            }
             break;
+
         case PROTOBUF_C_TYPE_STRING:
             break;
         case PROTOBUF_C_TYPE_INT64:
