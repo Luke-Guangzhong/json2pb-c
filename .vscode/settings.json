@@ -1,4 +1,9 @@
 {
     "clang-format.style": "{ BasedOnStyle: google, IndentWidth: 4, AlignConsecutiveAssignments: true, AlignConsecutiveDeclarations: true }",
-    "protoc": {}
+    "files.associations": {
+        "*.toml": "rust",
+        ".clang-format": "yaml",
+        "cvt.h": "c",
+        "protobuf-c.h": "c"
+    },
 }
