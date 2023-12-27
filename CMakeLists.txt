@@ -16,8 +16,7 @@ endif()
 
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-include_directories(${PROJECT_SOURCE_DIR}/include
-                    /usr/local/include/protobuf-c)
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
 set(UTILITIES_SOURCES ${PROJECT_SOURCE_DIR}/src/utilities.c)
 add_library(Utilities ${UTILITIES_SOURCES})

@@ -13,7 +13,11 @@
         "editor.formatOnPaste": true,
         "editor.formatOnSave": true,
         "editor.formatOnType": true,
-        "clang-format.style": "{ BasedOnStyle: google, IndentWidth: 4, AlignConsecutiveAssignments: true, AlignConsecutiveDeclarations: true, AlignTrailingComments: true, ColumnLimit: 0 }"
+        "clang-format.style": "{ BasedOnStyle: google, IndentWidth: 4, AlignConsecutiveAssignments: true, AlignConsecutiveDeclarations: true, AlignTrailingComments: true, ColumnLimit: 0 }",
+        "files.associations": {
+            ".clang-format": "yaml",
+            "protobuf-c.h": "c"
+        }
     },
     "extensions": {
         "recommendations": [
