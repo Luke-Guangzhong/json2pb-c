@@ -1,0 +1,19 @@
+{
+    "method": "ARTILLERY",
+    "rssi": -71,
+    "ip": "172.28.31.26",
+    "timestamp": 1703669548,
+    "tx_bytes": 659706976,
+    "rx_bytes": 69766656,
+    "laser": true,
+    "appendix": "SAM is actived",
+    "coordinate": {
+        "type": "",
+        "longitude": 51.30,
+        "latitude": 0.7,
+        "angle": 23,
+        "distance": 500
+    },
+    "status": "EXECUTE",
+    "weather": {}
+}
