@@ -83,12 +83,51 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
         case PROTOBUF_C_TYPE_INT64:
         case PROTOBUF_C_TYPE_SINT64:
         case PROTOBUF_C_TYPE_SFIXED64:
+            DEBUG("set %s to %s.(int64)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
+            if (cJSON_IsNumber(item)) {
+                *(int64_t*)((void*)msg + field_desc->offset) = (int64_t)item->valuedouble;
+            } else {
+                ERROR("JSON field %s is not a number\n", field_desc->name);
+            }
+            break;
+
         case PROTOBUF_C_TYPE_UINT32:
         case PROTOBUF_C_TYPE_FIXED32:
+            DEBUG("set %s to %s.(uint32)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
+            if (cJSON_IsNumber(item)) {
+                *(uint32_t*)((void*)msg + field_desc->offset) = (uint32_t)item->valuedouble;
+            } else {
+                ERROR("JSON field %s is not a number\n", field_desc->name);
+            }
+            break;
+
         case PROTOBUF_C_TYPE_UINT64:
         case PROTOBUF_C_TYPE_FIXED64:
+            DEBUG("set %s to %s.(uint64)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
+            if (cJSON_IsNumber(item)) {
+                *(uint64_t*)((void*)msg + field_desc->offset) = (uint64_t)item->valuedouble;
+            } else {
+                ERROR("JSON field %s is not a number\n", field_desc->name);
+            }
+            break;
+
         case PROTOBUF_C_TYPE_FLOAT:
+            DEBUG("set %s to %s.(float)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
+            if (cJSON_IsNumber(item)) {
+                *(float*)((void*)msg + field_desc->offset) = (float)item->valuedouble;
+            } else {
+                ERROR("JSON field %s is not a number\n", field_desc->name);
+            }
+            break;
         case PROTOBUF_C_TYPE_DOUBLE:
+            DEBUG("set %s to %s.(double)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
+            if (cJSON_IsNumber(item)) {
+                *(double*)((void*)msg + field_desc->offset) = item->valuedouble;
+            } else {
+                ERROR("JSON field %s is not a number\n", field_desc->name);
+            }
+            break;
+
         case PROTOBUF_C_TYPE_BYTES:
         case PROTOBUF_C_TYPE_MESSAGE:
         default:
