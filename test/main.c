@@ -57,6 +57,7 @@ parse_command_line(int argc, char const* argv[])
             break;
         }
     }
+    return EXIT_SUCCESS;
 }
 
 int
@@ -130,4 +131,5 @@ ERROR_EXIT_POINT:
 int
 test_cvt_pb_2_json(void)
 {
+    return EXIT_SUCCESS;
 }

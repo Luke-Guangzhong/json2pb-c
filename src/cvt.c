@@ -155,7 +155,7 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
 
         case PROTOBUF_C_TYPE_MESSAGE:
             if (cJSON_IsObject(item)) {
-                ProtobufCMessageDescriptor* sub_msg_desc = field_desc->descriptor;
+                ProtobufCMessageDescriptor* sub_msg_desc = (ProtobufCMessageDescriptor*)field_desc->descriptor;
                 ProtobufCMessage*           sub_msg      = (ProtobufCMessage*)calloc(1, sub_msg_desc->sizeof_message);
 
                 sub_msg_desc->message_init(sub_msg);
