@@ -113,7 +113,7 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             if (cJSON_IsString(item)) {
                 if (NULL != cJSON_GetStringValue(item) && strlen(cJSON_GetStringValue(item)) > 0) {
                     *(int*)((void*)msg + field_desc->offset) =
-                        protobuf_c_enum_descriptor_get_value_by_name(field_desc->descriptor, cJSON_GetStringValue(item)) != NULL
+                        NULL != protobuf_c_enum_descriptor_get_value_by_name(field_desc->descriptor, cJSON_GetStringValue(item))
                             ? protobuf_c_enum_descriptor_get_value_by_name(field_desc->descriptor, cJSON_GetStringValue(item))->value
                             : (ERROR_EXPR("enum string %s is not include in enum %s\n", cJSON_GetStringValue(item), field_desc->name),
                                (int)field_desc->default_value);
@@ -122,7 +122,7 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
                 }
             } else if (cJSON_IsNumber(item)) {
                 *(int*)((void*)msg + field_desc->offset) =
-                    protobuf_c_enum_descriptor_get_value(field_desc->descriptor, (int)item->valuedouble) != NULL
+                    NULL != protobuf_c_enum_descriptor_get_value(field_desc->descriptor, (int)item->valuedouble)
                         ? protobuf_c_enum_descriptor_get_value(field_desc->descriptor, (int)item->valuedouble)->value
                         : (ERROR_EXPR("enum number %d is not include in enum %s\n", (int)item->valuedouble, field_desc->name),
                            (int)field_desc->default_value);

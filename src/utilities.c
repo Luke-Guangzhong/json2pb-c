@@ -11,12 +11,12 @@ strtok_str(char* string, const char* delimiters_str)
     char*        rtn       = NULL;
     char*        end_ptr   = NULL;
 
-    if (delimiters_str == NULL || strlen(delimiters_str) == 0) {
+    if (NULL == delimiters_str || strlen(delimiters_str) == 0) {
         ERROR("param delimiters_str invalid!\n");
         return rtn;
     }
 
-    if (string != NULL && strlen(string) != 0) {
+    if (NULL != string && strlen(string) != 0) {
         // new string
         begin_ptr = string;
         // skip leading delimiters
@@ -25,14 +25,14 @@ strtok_str(char* string, const char* delimiters_str)
         }
     }
 
-    if (begin_ptr == NULL || (*begin_ptr) == '\0') {
+    if (NULL == begin_ptr || (*begin_ptr) == '\0') {
         DEBUG("\n\t[ACT]begin_ptr reach end!\n");
         return rtn;
     }
 
     end_ptr = strstr(begin_ptr, delimiters_str);
     rtn     = begin_ptr;
-    if (end_ptr != NULL) {
+    if (NULL != end_ptr) {
         // find delimiters
         memset(end_ptr, 0, strlen(delimiters_str));
         begin_ptr = end_ptr + strlen(delimiters_str);
@@ -64,17 +64,17 @@ write2File(const char* filepath, const char* msg)
 {
     int   rtn = -2;
     FILE* fp  = NULL;
-    if (filepath == NULL || strlen(filepath) <= 0) {
+    if (NULL == filepath || strlen(filepath) <= 0) {
         ERROR("filepath empty!(%s)\n", __FUNCTION__);
         return rtn;
     }
-    if (msg == NULL || strlen(msg) <= 0) {
+    if (NULL == msg || strlen(msg) <= 0) {
         ERROR("message empty!(%s)\n", __FUNCTION__);
         return rtn;
     }
 
     fp = fopen(filepath, "w");
-    if (fp == NULL) {
+    if (NULL == fp) {
         ERROR("file open err(filepath=%s)\n", filepath);
         return rtn;
     }
@@ -98,7 +98,7 @@ readFromFile(const char* file_name, char** data)
     int   ch_count = 0;
 
     fp = fopen(file_name, "r+");
-    if (fp == NULL) {
+    if (NULL == fp) {
         ERROR("Failed to open file %s (errno %d)\n", file_name, errno);
         return -1;
     }
