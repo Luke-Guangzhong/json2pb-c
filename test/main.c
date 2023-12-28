@@ -63,6 +63,8 @@ int
 main(int argc, char const* argv[])
 {
     printf("hello world!\n");
+    printf("cJSON version = %s\n", cJSON_Version());
+    printf("Protobuf-c version = %s\n", protobuf_c_version());
     int status = EXIT_SUCCESS;
     parse_command_line(argc, argv);
     switch (mode) {

@@ -11,6 +11,7 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
 {
     assert(NULL != msg);
     assert(NULL != root);
+    assert(cJSON_IsObject(root));
 
     int                       rtn        = EXIT_FAILURE;
     ProtobufCFieldDescriptor* field_desc = NULL;
@@ -169,7 +170,6 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             } else {
                 ERROR("JSON field %s is not an object\n", field_desc->name);
             }
-
             break;
 
         default:
