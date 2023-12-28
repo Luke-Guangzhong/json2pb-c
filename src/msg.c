@@ -18,8 +18,8 @@ request_print(J2b__Request msg)
              "\t[status]:%s\n"
              "\t[weather]:\n"
              "]\n",
-             protobuf_c_enum_descriptor_get_value(&j2b__request__method__descriptor, msg.method)->name, msg.rssi,
-             msg.ip, msg.timestamp, msg.tx_bytes, msg.rx_bytes, msg.laser ? "true" : "false", msg.appendix,
+             protobuf_c_enum_descriptor_get_value(&j2b__request__method__descriptor, msg.method)->name, msg.rssi, msg.ip, msg.timestamp,
+             msg.tx_bytes, msg.rx_bytes, msg.laser ? "true" : "false", msg.appendix,
              protobuf_c_enum_descriptor_get_value(&j2b__status__descriptor, msg.status)->name);
     return buffer;
 }
