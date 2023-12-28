@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.18)
 
 project(json2pb-c)
 
+set(CMAKE_C_FLAGS "-std=c99")
+
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 

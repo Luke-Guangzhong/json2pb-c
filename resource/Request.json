@@ -7,6 +7,7 @@
     "rx_bytes": "0x4288e00",
     "laser": true,
     "appendix": "SAM is actived",
+    "error_code": "pass",
     "coordinate": {
         "type": "",
         "longitude": 51.30,

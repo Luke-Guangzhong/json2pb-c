@@ -14,9 +14,8 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
 
     int                       rtn        = EXIT_FAILURE;
     ProtobufCFieldDescriptor* field_desc = NULL;
-    cJSON*                    item       = root->child;
 
-    for (size_t i = 0; i < msg->descriptor->n_fields; i++) {
+    for (cJSON* item = root->child;; item = item->next) {
         if (NULL == item) {
             break;
         }
@@ -164,7 +163,6 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             INFO("field %s cannot processed in json for now\n", field_desc->name);
             break;
         }
-        item = item->next;
     }
 
     rtn = EXIT_SUCCESS;
