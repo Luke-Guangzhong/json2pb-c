@@ -33,6 +33,8 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             DEBUG("set %s to %s.(int32)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
             if (cJSON_IsNumber(item)) {
                 *(int32_t*)((void*)msg + field_desc->offset) = (int32_t)item->valuedouble;
+            } else if (cJSON_IsString(item) && NULL != cJSON_GetStringValue(item)) {
+                *(int32_t*)((void*)msg + field_desc->offset) = strtol(cJSON_GetStringValue(item), NULL, 0);
             } else {
                 ERROR("JSON field %s is not a number\n", field_desc->name);
             }
@@ -86,6 +88,8 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             DEBUG("set %s to %s.(int64)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
             if (cJSON_IsNumber(item)) {
                 *(int64_t*)((void*)msg + field_desc->offset) = (int64_t)item->valuedouble;
+            } else if (cJSON_IsString(item) && NULL != cJSON_GetStringValue(item)) {
+                *(int64_t*)((void*)msg + field_desc->offset) = strtoll(cJSON_GetStringValue(item), NULL, 0);
             } else {
                 ERROR("JSON field %s is not a number\n", field_desc->name);
             }
@@ -96,6 +100,8 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             DEBUG("set %s to %s.(uint32)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
             if (cJSON_IsNumber(item)) {
                 *(uint32_t*)((void*)msg + field_desc->offset) = (uint32_t)item->valuedouble;
+            } else if (cJSON_IsString(item) && NULL != cJSON_GetStringValue(item)) {
+                *(uint32_t*)((void*)msg + field_desc->offset) = strtoul(cJSON_GetStringValue(item), NULL, 0);
             } else {
                 ERROR("JSON field %s is not a number\n", field_desc->name);
             }
@@ -106,6 +112,8 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             DEBUG("set %s to %s.(uint64)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
             if (cJSON_IsNumber(item)) {
                 *(uint64_t*)((void*)msg + field_desc->offset) = (uint64_t)item->valuedouble;
+            } else if (cJSON_IsString(item) && NULL != cJSON_GetStringValue(item)) {
+                *(uint64_t*)((void*)msg + field_desc->offset) = strtoull(cJSON_GetStringValue(item), NULL, 0);
             } else {
                 ERROR("JSON field %s is not a number\n", field_desc->name);
             }
@@ -115,14 +123,19 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             DEBUG("set %s to %s.(float)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
             if (cJSON_IsNumber(item)) {
                 *(float*)((void*)msg + field_desc->offset) = (float)item->valuedouble;
+            } else if (cJSON_IsString(item) && NULL != cJSON_GetStringValue(item)) {
+                *(float*)((void*)msg + field_desc->offset) = strtof(cJSON_GetStringValue(item), NULL);
             } else {
                 ERROR("JSON field %s is not a number\n", field_desc->name);
             }
             break;
+
         case PROTOBUF_C_TYPE_DOUBLE:
             DEBUG("set %s to %s.(double)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
             if (cJSON_IsNumber(item)) {
                 *(double*)((void*)msg + field_desc->offset) = item->valuedouble;
+            } else if (cJSON_IsString(item) && NULL != cJSON_GetStringValue(item)) {
+                *(double*)((void*)msg + field_desc->offset) = strtod(cJSON_GetStringValue(item), NULL);
             } else {
                 ERROR("JSON field %s is not a number\n", field_desc->name);
             }

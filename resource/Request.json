@@ -3,7 +3,7 @@
     "rssi": -71,
     "ip": "172.28.31.26",
     "timestamp": 1703669548,
-    "tx_bytes": 659706976,
+    "tx_bytes": "659706976",
     "rx_bytes": 69766656,
     "laser": true,
     "appendix": "SAM is actived",
