@@ -114,13 +114,17 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             if (cJSON_IsString(item)) {
                 if (NULL != cJSON_GetStringValue(item) && strlen(cJSON_GetStringValue(item)) > 0) {
                     *(int*)((void*)msg + field_desc->offset) =
-                        protobuf_c_enum_descriptor_get_value_by_name(field_desc->descriptor, cJSON_GetStringValue(item))
-                            ->value;
+                        protobuf_c_enum_descriptor_get_value_by_name(field_desc->descriptor, cJSON_GetStringValue(item)) != NULL
+                            ? protobuf_c_enum_descriptor_get_value_by_name(field_desc->descriptor, cJSON_GetStringValue(item))->value
+                            : field_desc->default_value;
                 } else {
                     ERROR("JSON field %s is empty string\n", field_desc->name);
                 }
             } else if (cJSON_IsNumber(item)) {
-                *(int*)((void*)msg + field_desc->offset) = (int)item->valuedouble;
+                *(int*)((void*)msg + field_desc->offset) =
+                    protobuf_c_enum_descriptor_get_value(field_desc->descriptor, (int)item->valuedouble) != NULL
+                        ? protobuf_c_enum_descriptor_get_value(field_desc->descriptor, (int)item->valuedouble)->value
+                        : field_desc->default_value;
             } else {
                 ERROR("JSON field %s is not valid\n", field_desc->name);
             }
