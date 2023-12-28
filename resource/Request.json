@@ -9,7 +9,7 @@
     "appendix": "SAM is actived",
     "error_code": "pass",
     "coordinate": {
-        "type": "",
+        "type": "POLAR",
         "longitude": 51.30,
         "latitude": 0.7,
         "angle": 23,

@@ -102,7 +102,9 @@ test_cvt_json_2_pb(void)
 
     cvt_json_2_pb((ProtobufCMessage*)req_msg, root);
 
-    printf("json->pb\njson=%s\npb=%s\n", cJSON_Print(root), request_print(*req_msg));
+    printf("json->pb\njson=%s\n", cJSON_Print(root));
+
+    printf("pb=%s\n", request_print(*req_msg));
 
     status = EXIT_SUCCESS;
 

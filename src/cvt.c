@@ -19,11 +19,13 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
         if (NULL == item) {
             break;
         }
+        assert(NULL != item);
 
         if (NULL == (field_desc = protobuf_c_message_descriptor_get_field_by_name(msg->descriptor, item->string))) {
             INFO("json field %s doesn't match any field in message %s\n", item->string, msg->descriptor->name);
             continue;
         }
+        assert(NULL != field_desc);
 
         switch (field_desc->type) {
         case PROTOBUF_C_TYPE_INT32:
@@ -109,7 +111,6 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             break;
 
         case PROTOBUF_C_TYPE_ENUM:
-            DEBUG("set %s to %s(enum)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
             if (cJSON_IsString(item)) {
                 if (NULL != cJSON_GetStringValue(item) && strlen(cJSON_GetStringValue(item)) > 0) {
                     *(int*)((void*)msg + field_desc->offset) =
@@ -129,6 +130,7 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
             } else {
                 ERROR("JSON field %s is not valid\n", field_desc->name);
             }
+            DEBUG("set %s to %s(enum)%s\n", cJSON_Print(item), msg->descriptor->name, field_desc->name);
             break;
 
         case PROTOBUF_C_TYPE_STRING:
@@ -152,6 +154,17 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
 
         case PROTOBUF_C_TYPE_MESSAGE:
             if (cJSON_IsObject(item)) {
+                ProtobufCMessageDescriptor* sub_msg_desc = field_desc->descriptor;
+                ProtobufCMessage*           sub_msg      = (ProtobufCMessage*)calloc(1, sub_msg_desc->sizeof_message);
+
+                sub_msg_desc->message_init(sub_msg);
+
+                if (cvt_json_2_pb(sub_msg, item) == EXIT_SUCCESS) {
+                    *(ProtobufCMessage**)((void*)msg + field_desc->offset) = sub_msg;
+                } else {
+                    ERROR("cvt json 2 pb failed!\n");
+                    protobuf_c_message_free_unpacked(sub_msg, NULL);
+                }
 
             } else {
                 ERROR("JSON field %s is not an object\n", field_desc->name);
