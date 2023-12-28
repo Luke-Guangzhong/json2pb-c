@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 int
-cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
+cvt_json_2_pb(ProtobufCMessage* restrict msg, cJSON* restrict root)
 {
     assert(NULL != msg);
     assert(NULL != root);
@@ -186,7 +186,7 @@ ERROR_EXIT_POINT:
 }
 
 int
-cvt_pb_2_json(ProtobufCMessage* msg, cJSON* root)
+cvt_pb_2_json(ProtobufCMessage* restrict msg, cJSON* restrict root)
 {
     return EXIT_SUCCESS;
 }

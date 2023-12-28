@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 char*
-strtok_str(char* string, const char* delimiters_str)
+strtok_str(char* restrict string, const char* restrict delimiters_str)
 {
     static char* begin_ptr = NULL;
     char*        rtn       = NULL;
@@ -44,7 +44,7 @@ strtok_str(char* string, const char* delimiters_str)
 }
 
 char*
-remove_char_from_str(char* s, const char c)
+remove_char_from_str(char* restrict s, const char c)
 {
     int i   = 0;
     int j   = 0;
@@ -60,7 +60,7 @@ remove_char_from_str(char* s, const char c)
 }
 
 int
-write2File(const char* filepath, const char* msg)
+write2File(const char* restrict filepath, const char* restrict msg)
 {
     int   rtn = -2;
     FILE* fp  = NULL;
@@ -89,7 +89,7 @@ write2File(const char* filepath, const char* msg)
 }
 
 int
-readFromFile(const char* file_name, char** data)
+readFromFile(const char* restrict file_name, char* restrict* restrict data)
 {
     assert(NULL != file_name);
     assert(NULL != data);

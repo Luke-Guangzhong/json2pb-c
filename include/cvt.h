@@ -12,7 +12,7 @@
  * @return int EXIT_SUCCESS OR EXIT_FAILURE
  * @todo bytes and repeated fields
  */
-int cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root);
+int cvt_json_2_pb(ProtobufCMessage* restrict msg, cJSON* restrict root);
 
 /**
  * @brief
@@ -21,6 +21,6 @@ int cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root);
  * @param root
  * @return int
  */
-int cvt_pb_2_json(ProtobufCMessage* msg, cJSON* root);
+int cvt_pb_2_json(ProtobufCMessage* restrict msg, cJSON* restrict root);
 
 #endif

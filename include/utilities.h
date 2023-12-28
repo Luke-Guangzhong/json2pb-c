@@ -8,7 +8,7 @@
  * @param delimiters_str
  * @return char*
  */
-char* strtok_str(char* string, const char* delimiters_str);
+char* strtok_str(char* restrict string, const char* restrict delimiters_str);
 
 /**
  * @brief
@@ -17,7 +17,7 @@ char* strtok_str(char* string, const char* delimiters_str);
  * @param c
  * @return char*
  */
-char* remove_char_from_str(char* s, const char c);
+char* remove_char_from_str(char* restrict s, const char c);
 
 /**
  * @brief
@@ -26,7 +26,7 @@ char* remove_char_from_str(char* s, const char c);
  * @param msg
  * @return int
  */
-int write2File(const char* filepath, const char* msg);
+int write2File(const char* restrict filepath, const char* restrict msg);
 
 /**
  * @brief
@@ -35,6 +35,6 @@ int write2File(const char* filepath, const char* msg);
  * @param data
  * @return int
  */
-int readFromFile(const char* file_name, char** data);
+int readFromFile(const char* restrict file_name, char* restrict* restrict data);
 
 #endif
