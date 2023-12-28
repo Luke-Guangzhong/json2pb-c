@@ -116,10 +116,8 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
                     *(int*)((void*)msg + field_desc->offset) =
                         protobuf_c_enum_descriptor_get_value_by_name(field_desc->descriptor, cJSON_GetStringValue(item)) != NULL
                             ? protobuf_c_enum_descriptor_get_value_by_name(field_desc->descriptor, cJSON_GetStringValue(item))->value
-                            : field_desc->default_value,
-                                         fprintf(stderr, "enum string %s is not include in enum %s\n", cJSON_GetStringValue(item),
-                                                 field_desc->name),
-                                         fflush(stderr);
+                            : (ERROR_EXPR("enum string %s is not include in enum %s\n", cJSON_GetStringValue(item), field_desc->name),
+                               (int)field_desc->default_value);
                 } else {
                     ERROR("JSON field %s is empty string\n", field_desc->name);
                 }
@@ -127,10 +125,8 @@ cvt_json_2_pb(ProtobufCMessage* msg, cJSON* root)
                 *(int*)((void*)msg + field_desc->offset) =
                     protobuf_c_enum_descriptor_get_value(field_desc->descriptor, (int)item->valuedouble) != NULL
                         ? protobuf_c_enum_descriptor_get_value(field_desc->descriptor, (int)item->valuedouble)->value
-                        : field_desc->default_value,
-                                     fprintf(stderr, "enum number %d is not include in enum %s\n", (int)item->valuedouble,
-                                             field_desc->name),
-                                     fflush(stderr);
+                        : (ERROR_EXPR("enum number %d is not include in enum %s\n", (int)item->valuedouble, field_desc->name),
+                           (int)field_desc->default_value);
             } else {
                 ERROR("JSON field %s is not valid\n", field_desc->name);
             }

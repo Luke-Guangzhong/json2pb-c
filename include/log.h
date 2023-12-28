@@ -38,6 +38,26 @@
 #define DEBUG(format, args...)
 #endif
 
+#define INFO_EXPR(format, args...) fprintf(stdout, format, ##args), fflush(stdout)
+
+#define ERROR_EXPR(format, args...)                                               \
+    fprintf(stderr,                                                               \
+            LOG_CLRSTR_NONE LOG_CLRSTR_RED "[ERROR]"                              \
+                                           "[%s][%s][%d]" LOG_CLRSTR_NONE format, \
+            basename(__FILE__), __FUNCTION__, __LINE__, ##args),                  \
+        fflush(stderr)
+
+#ifdef DEBUG_ENABLE
+#define DEBUG_EXPR(format, args...)                                        \
+    fprintf(stdout,                                                        \
+            LOG_CLRSTR_NONE LOG_CLRSTR_BLUE "[DEBUG]"                      \
+                                            "[%s]" LOG_CLRSTR_NONE format, \
+            __FUNCTION__, ##args),                                         \
+        fflush(stdout)
+#else
+#define DEBUG_EXPR(format, args...)
+#endif
+
 #define FUNCTION_ENTER() DEBUG("enter!\n")
 #define FUNCTION_EXIT()  DEBUG("exit!\n")
 

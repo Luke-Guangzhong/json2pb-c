@@ -1,4 +1,5 @@
 #include "msg.h"
+#include "log.h"
 
 char*
 request_print(J2b__Request msg)
@@ -18,8 +19,14 @@ request_print(J2b__Request msg)
              "\t[status]:%s\n"
              "\t[weather]:\n"
              "]\n",
-             protobuf_c_enum_descriptor_get_value(&j2b__request__method__descriptor, msg.method)->name, msg.rssi, msg.ip, msg.timestamp,
-             msg.tx_bytes, msg.rx_bytes, msg.laser ? "true" : "false", msg.appendix,
-             protobuf_c_enum_descriptor_get_value(&j2b__status__descriptor, msg.status)->name);
+             NULL != protobuf_c_enum_descriptor_get_value(&j2b__request__method__descriptor, msg.method)
+                 ? protobuf_c_enum_descriptor_get_value(&j2b__request__method__descriptor, msg.method)->name
+                 : (ERROR_EXPR("value %d is not included in enum %s\n", msg.method, j2b__request__method__descriptor.name),
+                    protobuf_c_message_descriptor_get_field_by_name(&msg.base, "method")->default_value),
+             msg.rssi, msg.ip, msg.timestamp, msg.tx_bytes, msg.rx_bytes, msg.laser ? "true" : "false", msg.appendix,
+             NULL != protobuf_c_enum_descriptor_get_value(&j2b__status__descriptor, msg.status)
+                 ? protobuf_c_enum_descriptor_get_value(&j2b__status__descriptor, msg.status)->name
+                 : (ERROR_EXPR("value %d is not included in enum %s\n", msg.method, j2b__status__descriptor.name),
+                    protobuf_c_message_descriptor_get_field_by_name(&msg.base, "status")->default_value));
     return buffer;
 }
