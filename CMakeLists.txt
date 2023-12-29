@@ -8,8 +8,6 @@ message("c_CMAKE_SOURCE_DIR:          " ${CMAKE_SOURCE_DIR} )
 
 include(ExternalProject)
 
-# cJSON external dependency
-#-------------------------------------------------------------------------------
 ExternalProject_Add(cJSON
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/_prefix/cJSON
     GIT_REPOSITORY git@github.com:DaveGamble/cJSON.git
@@ -18,6 +16,20 @@ ExternalProject_Add(cJSON
     )
 add_library(libcJSON STATIC  IMPORTED)
 add_dependencies(libcJSON cJSON)
+
+ExternalProject_Add(protobuf-c
+    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/_prefix/protobuf-c
+    GIT_REPOSITORY git@github.com:protobuf-c/protobuf-c.git
+    GIT_TAG "v1.5.0"
+    CONFIGURE_COMMAND COMMAND <SOURCE_DIR>/autogen.sh && <SOURCE_DIR>/configure
+                                                     --prefix=${CMAKE_SOURCE_DIR}/build
+                                                     --enable-shared
+                                                     --enable-static
+                                                     --disable-protoc
+	BUILD_IN_SOURCE 1
+)
+add_library(libprotobuf-c STATIC SHARED IMPORTED)
+add_dependencies(libprotobuf-c protobuf-c)
 
 set(CMAKE_C_FLAGS "-std=c99")
 set(CMAKE_BUILD_TYPE "Debug")
@@ -49,13 +61,13 @@ set(SOURCES ${PROJECT_SOURCE_DIR}/src/cvt.c
 add_library(json2pb ${SOURCES})
 target_link_libraries(json2pb   libprotobuf-c.a
                                 Utilities
-                                cjson)
+                                libcjson.a)
 
 add_executable(main test/main.c)
 target_link_libraries(main  json2pb
                             libprotobuf-c.a
                             Utilities
-                            cjson) 
+                            libcjson.a) 
 
 enable_testing()
 add_test(NAME J2P COMMAND main -j${PROJECT_SOURCE_DIR}/resource/Request.json -mj2r) 

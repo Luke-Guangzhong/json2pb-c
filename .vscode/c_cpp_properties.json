@@ -4,8 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/build/include/**",
                 "/usr/include/**",
-                "/usr/local/include/protobuf-c"
+                "/usr/local/include/**"
             ],
             "defines": [],
             "cStandard": "c17",

@@ -1,8 +1,8 @@
 #ifndef __CVT_H__
 #define __CVT_H__
 
-#include <cjson/cJSON.h>
-#include <protobuf-c/protobuf-c.h>
+#include "cjson/cJSON.h"
+#include "protobuf-c/protobuf-c.h"
 
 /**
  * @brief convert a cjson object to a protobuf msg
