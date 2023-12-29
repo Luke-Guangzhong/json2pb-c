@@ -28,18 +28,19 @@ add_library(Utilities ${UTILITIES_SOURCES})
 
 set(SOURCES ${PROJECT_SOURCE_DIR}/src/cvt.c
             ${PROJECT_SOURCE_DIR}/src/msg.pb-c.c
-            ${PROJECT_SOURCE_DIR}/src/cJSON.c
             ${PROJECT_SOURCE_DIR}/src/msg.c)
 add_compile_options(-DDEBUG_ENABLE)
 add_library(json2pb ${SOURCES})
 target_link_libraries(json2pb   libprotobuf-c.a
                                 Utilities
+                                cjson
 )
 
 add_executable(main test/main.c)
 target_link_libraries(main  json2pb
                             libprotobuf-c.a
-                            Utilities) 
+                            Utilities
+                            cjson) 
 
 enable_testing()
 add_test(NAME J2P COMMAND main -j${PROJECT_SOURCE_DIR}/resource/Request.json -mj2r) 
