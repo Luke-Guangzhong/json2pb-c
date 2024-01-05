@@ -6,7 +6,8 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/build/include/**",
                 "/usr/include/**",
-                "/usr/local/include/**"
+                "/usr/local/include/**",
+                "/usr/include/llvm-14/llvm/Support"
             ],
             "defines": [],
             "cStandard": "c17",

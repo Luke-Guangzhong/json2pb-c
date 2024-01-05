@@ -16,5 +16,8 @@
         "distance": 500
     },
     "status": "EXECUTE",
-    "weather": {}
+    "weather": {
+        "direct": "West"
+    },
+    "raw_file": "VGhlIGxhbmQgd2hlcmUgZXZpbCBmbG93ZXJzIGJsb29tLCBtYXkgdGhlIHRydXRoIGNvbWUgYXMgc29vbiBhcyBwb3NzaWJsZSwgdG8gY29tZm9ydCB0aGUgaW5ub2NlbnQgZGVhZC4="
 }

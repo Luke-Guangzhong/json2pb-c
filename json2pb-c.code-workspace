@@ -15,9 +15,12 @@
         "editor.formatOnType": true,
         "clang-format.style": "{ BasedOnStyle: google, IndentWidth: 4, AlignConsecutiveAssignments: true, AlignConsecutiveDeclarations: true, AlignTrailingComments: true, ColumnLimit: 0 }",
         "files.associations": {
+            "*.toml": "rust",
             ".clang-format": "yaml",
             "protobuf-c.h": "c",
-            "stddef.h": "c"
+            "stddef.h": "c",
+            "base64.h": "c",
+            "log.h": "c"
         }
     },
     "extensions": {

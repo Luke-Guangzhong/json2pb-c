@@ -10,9 +10,15 @@ enum Status {
 };
 
 enum BasicDirection {
-    North     = 0;
-    NorthEast = 1;
-    East      = 2;
+    Unknown   = 0;
+    North     = 1;
+    NorthEast = 2;
+    East      = 3;
+    SouthEast = 4;
+    South     = 5;
+    SouthWest = 6;
+    West      = 7;
+    NorthWest = 8;
 }
 
 message Request {
@@ -30,6 +36,7 @@ message Request {
     Coordinate coordinate = 12;
     Status     status     = 13;
     Weather    weather    = 14;
+    bytes      raw_file   = 15;
 
     enum Method {
         ARTILLERY = 0;
@@ -38,7 +45,9 @@ message Request {
     };
 }
 
-message Weather {}
+message Weather {
+    BasicDirection direct = 1;
+}
 
 message Coordinate {
     Type   type      = 1;

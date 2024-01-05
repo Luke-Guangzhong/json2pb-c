@@ -1,4 +1,5 @@
 #include "cvt.h"
+#include "base64.h"
 #include "log.h"
 
 #include <assert.h>
@@ -150,7 +151,28 @@ cvt_json_2_pb(ProtobufCMessage* restrict msg, cJSON* restrict root)
             break;
 
         case PROTOBUF_C_TYPE_BYTES:
-            INFO("field %s cannot processed in json for now\n", field_desc->name);
+            DEBUG("set %s to (string)%s\n", cJSON_Print(item), field_desc->name);
+            if (cJSON_IsString(item)) {
+                if (NULL != cJSON_GetStringValue(item) && strlen(cJSON_GetStringValue(item)) > 0) {
+                    int len = strlen(cJSON_GetStringValue(item));
+
+                    *(char**)((void*)msg + field_desc->offset) = (char*)calloc(BASE64_DECODE_OUT_SIZE(len), 1);
+                    if (NULL == *(char**)((void*)msg + field_desc->offset)) {
+                        goto ERROR_EXIT_POINT;
+                    }
+
+                    if (base64_decode(cJSON_GetStringValue(item), len, *(char**)((void*)msg + field_desc->offset)) <= 0) {
+                        free(*(char**)((void*)msg + field_desc->offset));
+                        *(char**)((void*)msg + field_desc->offset) = NULL;
+                        goto ERROR_EXIT_POINT;
+                    }
+
+                } else {
+                    ERROR("JSON field %s is empty string\n", field_desc->name);
+                }
+            } else {
+                ERROR("JSON field %s is not a string\n", field_desc->name);
+            }
             break;
 
         case PROTOBUF_C_TYPE_MESSAGE:
