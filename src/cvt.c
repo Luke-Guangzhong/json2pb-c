@@ -154,17 +154,18 @@ cvt_json_2_pb(ProtobufCMessage* restrict msg, cJSON* restrict root)
             DEBUG("set %s to (string)%s\n", cJSON_Print(item), field_desc->name);
             if (cJSON_IsString(item)) {
                 if (NULL != cJSON_GetStringValue(item) && strlen(cJSON_GetStringValue(item)) > 0) {
-                    int len = strlen(cJSON_GetStringValue(item));
+                    ProtobufCBinaryData* bin_data = (ProtobufCBinaryData*)((void*)msg + field_desc->offset);
 
-                    *(char**)((void*)msg + field_desc->offset) = (char*)calloc(BASE64_DECODE_OUT_SIZE(len), 1);
-                    if (NULL == *(char**)((void*)msg + field_desc->offset)) {
+                    bin_data->len  = BASE64_DECODE_OUT_SIZE(strlen(cJSON_GetStringValue(item)));
+                    bin_data->data = (unsigned char*)calloc(bin_data->len, 1);
+                    if (NULL == bin_data->data) {
                         goto ERROR_EXIT_POINT;
                     }
 
-                    if (base64_decode(cJSON_GetStringValue(item), len, *(char**)((void*)msg + field_desc->offset)) <= 0) {
-                        free(*(char**)((void*)msg + field_desc->offset));
-                        *(char**)((void*)msg + field_desc->offset) = NULL;
-                        goto ERROR_EXIT_POINT;
+                    if (base64_decode(cJSON_GetStringValue(item), strlen(cJSON_GetStringValue(item)), bin_data->data) <= 0) {
+                        bin_data->len = 0;
+                        free(bin_data->data);
+                        bin_data->data = NULL;
                     }
 
                 } else {
@@ -210,5 +211,18 @@ ERROR_EXIT_POINT:
 int
 cvt_pb_2_json(ProtobufCMessage* restrict msg, cJSON* restrict root)
 {
-    return EXIT_SUCCESS;
+    assert(NULL != msg);
+    assert(NULL != root);
+    assert(cJSON_IsObject(root));
+
+    int rtn = EXIT_FAILURE;
+
+    for (int index = 0; index < msg->descriptor->n_fields; index++) {
+    }
+
+    rtn = EXIT_SUCCESS;
+
+ERROR_EXIT_POINT:
+
+    return rtn;
 }

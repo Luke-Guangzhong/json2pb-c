@@ -37,6 +37,6 @@ request_print(J2b__Request msg)
                  ? protobuf_c_enum_descriptor_get_value(&j2b__basic_direction__descriptor, msg.weather->direct)->name
                  : (ERROR_EXPR("value %d is not included in enum %s\n", msg.weather->direct, j2b__basic_direction__descriptor.name),
                     protobuf_c_message_descriptor_get_field_by_name(&msg.weather->base, "direct")->default_value),
-             msg.raw_file);
+             msg.raw_file.data);
     return buffer;
 }
