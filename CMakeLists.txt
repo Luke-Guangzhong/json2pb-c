@@ -31,6 +31,15 @@ ExternalProject_Add(protobuf-c
 add_library(libprotobuf-c STATIC SHARED IMPORTED)
 add_dependencies(libprotobuf-c protobuf-c)
 
+ExternalProject_Add(base64
+    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/_prefix/base64
+    GIT_REPOSITORY git@github.com:Luke-Guangzhong/base64.git
+    GIT_TAG "develop"
+    CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/build
+    )
+add_library(libbase64 STATIC  IMPORTED)
+add_dependencies(libbase64 base64)
+
 set(CMAKE_C_FLAGS "-std=c99")
 set(CMAKE_BUILD_TYPE "Debug")
 set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
@@ -61,13 +70,15 @@ set(SOURCES ${PROJECT_SOURCE_DIR}/src/cvt.c
 add_library(json2pb ${SOURCES})
 target_link_libraries(json2pb   libprotobuf-c.a
                                 Utilities
-                                libcjson.a)
+                                libcjson.a
+                                libbase64.a)
 
 add_executable(main test/main.c)
 target_link_libraries(main  json2pb
                             libprotobuf-c.a
                             Utilities
-                            libcjson.a) 
+                            libcjson.a
+                            libbase64.a)
 
 enable_testing()
 add_test(NAME J2P COMMAND main -j${PROJECT_SOURCE_DIR}/resource/Request.json -mj2r) 
