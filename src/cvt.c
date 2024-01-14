@@ -215,9 +215,71 @@ cvt_pb_2_json(ProtobufCMessage* restrict msg, cJSON* restrict root)
     assert(NULL != root);
     assert(cJSON_IsObject(root));
 
-    int rtn = EXIT_FAILURE;
+    int                       rtn        = EXIT_FAILURE;
+    ProtobufCFieldDescriptor* field_desc = NULL;
 
     for (int index = 0; index < msg->descriptor->n_fields; index++) {
+        field_desc = &(msg->descriptor->fields[index]);
+        switch (field_desc->type) {
+        case PROTOBUF_C_TYPE_INT32:
+        case PROTOBUF_C_TYPE_SINT32:
+        case PROTOBUF_C_TYPE_SFIXED32:
+            cJSON_AddNumberToObject(root, field_desc->name, *(int32_t*)((void*)msg + field_desc->offset));
+            break;
+        case PROTOBUF_C_TYPE_INT64:
+        case PROTOBUF_C_TYPE_SINT64:
+        case PROTOBUF_C_TYPE_SFIXED64:
+            cJSON_AddNumberToObject(root, field_desc->name, *(int64_t*)((void*)msg + field_desc->offset));
+            break;
+        case PROTOBUF_C_TYPE_UINT32:
+        case PROTOBUF_C_TYPE_FIXED32:
+            cJSON_AddNumberToObject(root, field_desc->name, *(uint32_t*)((void*)msg + field_desc->offset));
+            break;
+        case PROTOBUF_C_TYPE_UINT64:
+        case PROTOBUF_C_TYPE_FIXED64:
+            cJSON_AddNumberToObject(root, field_desc->name, *(uint64_t*)((void*)msg + field_desc->offset));
+            break;
+        case PROTOBUF_C_TYPE_FLOAT:
+        case PROTOBUF_C_TYPE_DOUBLE:
+            cJSON_AddNumberToObject(root, field_desc->name, *(double*)((void*)msg + field_desc->offset));
+            break;
+        case PROTOBUF_C_TYPE_BOOL:
+            cJSON_AddBoolToObject(root, field_desc->name, *(bool*)((void*)msg + field_desc->offset));
+            break;
+        case PROTOBUF_C_TYPE_ENUM:
+            ProtobufCEnumDescriptor* enum_desc =
+                protobuf_c_enum_descriptor_get_value(field_desc->descriptor, *(int*)((void*)msg + field_desc->offset));
+            if (NULL != enum_desc) {
+                cJSON_AddStringToObject(root, field_desc->name, enum_desc->name);
+            }
+            break;
+        case PROTOBUF_C_TYPE_STRING:
+            cJSON_AddStringToObject(root, field_desc->name, *(char**)((void*)msg + field_desc->offset));
+            break;
+        case PROTOBUF_C_TYPE_BYTES:
+            ProtobufCBinaryData* bin_data   = (ProtobufCBinaryData*)((void*)msg + field_desc->offset);
+            char*                encode_out = calloc(1, BASE64_ENCODE_OUT_SIZE(bin_data->len));
+            if (NULL == encode_out) {
+                goto ERROR_EXIT_POINT;
+            }
+
+            base64_encode(bin_data->data, bin_data->len, encode_out);
+
+            cJSON_AddStringToObject(root, field_desc->name, encode_out);
+
+            free(encode_out);
+            break;
+        case PROTOBUF_C_TYPE_MESSAGE:
+            ProtobufCMessage* sub_msg  = (ProtobufCMessage*)((void*)msg + field_desc->offset);
+            cJSON*            sub_root = cJSON_CreateObject();
+
+            cvt_json_2_pb(sub_msg, sub_root);
+
+            cJSON_AddItemToObject(root, field_desc->name, sub_root);
+            break;
+        default:
+            break;
+        };
     }
 
     rtn = EXIT_SUCCESS;
