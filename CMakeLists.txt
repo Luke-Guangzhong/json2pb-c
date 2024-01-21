@@ -33,7 +33,7 @@ add_dependencies(libprotobuf-c protobuf-c)
 
 ExternalProject_Add(base64
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/_prefix/base64
-    GIT_REPOSITORY git@github.com:Luke-Guangzhong/base64.git
+    GIT_REPOSITORY git@gitee.com:luke_guangzhong/base64.git
     GIT_TAG "develop"
     CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/build
     )
