@@ -10,8 +10,8 @@ include(ExternalProject)
 
 ExternalProject_Add(cJSON
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/_prefix/cJSON
-    GIT_REPOSITORY git@github.com:DaveGamble/cJSON.git
-    GIT_TAG "v1.7.17"
+    GIT_REPOSITORY git@gitee.com:luke_guangzhong/cJSON.git
+    GIT_TAG "87d8f0961a01bf09bef98ff89bae9fdec42181ee"
     CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/build -DBUILD_SHARED_AND_STATIC_LIBS=On
     )
 add_library(libcJSON STATIC  IMPORTED)
@@ -19,8 +19,8 @@ add_dependencies(libcJSON cJSON)
 
 ExternalProject_Add(protobuf-c
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/_prefix/protobuf-c
-    GIT_REPOSITORY git@github.com:protobuf-c/protobuf-c.git
-    GIT_TAG "v1.5.0"
+    GIT_REPOSITORY git@gitee.com:luke_guangzhong/protobuf-c.git
+    GIT_TAG "8c201f6e47a53feaab773922a743091eb6c8972a"
     CONFIGURE_COMMAND COMMAND <SOURCE_DIR>/autogen.sh && <SOURCE_DIR>/configure
                                                      --prefix=${CMAKE_SOURCE_DIR}/build
                                                      --enable-shared
