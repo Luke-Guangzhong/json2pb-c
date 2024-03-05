@@ -52,6 +52,7 @@ execute_process(COMMAND protoc --c_out=${PROJECT_SOURCE_DIR}/src/ -I ${PROJECT_S
 if(EXISTS ${PROJECT_SOURCE_DIR}/src/msg.pb-c.h)
     execute_process(COMMAND mv ${PROJECT_SOURCE_DIR}/src/msg.pb-c.h  ${PROJECT_SOURCE_DIR}/include )
 else()
+    message(FATAL_ERROR "Failed to generate msg.pb-c.h")
     return()
 endif()
 
